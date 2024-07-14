@@ -18,18 +18,27 @@ const ImagenesContainer = styled.section`
     flex-wrap: wrap;
     gap: 24px;
 `
-const Galeria = ({ fotos = [], setTag, fotoSelecionada, alAlternarFavorito }) => {
+
+
+const Galeria = ({ fotos = [], alSeleccionarFoto,alAlternarFavorito }) => {
+
     return (
         <>
-            <Tags setTag={setTag} />
+            <Tag />
             <GaleriaContainer>
-                <SeccionFlotante>
-                    <Titulos>Navega por la galería</Titulos>
-                    <ImagenContainer>
-                        {fotos.map(foto => <Imagen foto={foto} key={foto.id} alSolicitarZoom={fotoSelecionada} alAlternarFavorito={alAlternarFavorito} />)}
-                    </ImagenContainer>
-                </SeccionFlotante>
+                <SeccionFluida>
+                    <Titulo>Navegue por la galería</Titulo>
+                    <ImagenesContainer>
+                        {fotos.map(foto => <Imagen
+                        alAlternarFavorito= {alAlternarFavorito}
+                        alSolicitarZoom={alSeleccionarFoto}
+                            key={foto.id}
+                            foto={foto} />)
+                        }
+                    </ImagenesContainer>
+                </SeccionFluida>
                 <Populares />
+
             </GaleriaContainer>
         </>
     )

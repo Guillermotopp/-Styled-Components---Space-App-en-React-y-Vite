@@ -30,30 +30,22 @@ const ContenidoGaleria = styled.section`
   flex-grow: 1;
 `
 
-import { useEffect, useState } from "react"
+
 const App = () => {
   const [fotosDeGaleria, setFotosDeGaleria] = useState(fotos)
-  const [filtro, setFiltro] = useState('')
-  const [tag, setTag] = useState(0)
   const [fotoSeleccionada, setFotoSeleccionada] = useState(null)
 
-  useEffect(() => {
-    const fotosFiltradas = fotos.filter(foto => {
-      const filtroPorTag = !tag || foto.tagId === tag;
-      const filtroPorTitulo = !filtro || foto.titulo.toLowerCase().includes(filtro.toLowerCase())
-      return filtroPorTag && filtroPorTitulo
-    })
-    setFotosDeGaleria(fotosFiltradas)
-  }, [filtro, tag])
-
   const alAlternarFavorito = (foto) => {
+
     if (foto.id === fotoSeleccionada?.id) {
       setFotoSeleccionada({
         ...fotoSeleccionada,
         favorita: !fotoSeleccionada.favorita
       })
+
     }
-    setFotosDaGaleria(fotosDaGaleria.map(fotoDaGaleria => {
+
+    setFotosDeGaleria(fotosDeGaleria.map(fotoDeGaleria => {
       return {
         ...fotoDeGaleria,
         favorita: fotoDeGaleria.id === foto.id ? !foto.favorita : fotoDeGaleria.favorita
@@ -61,37 +53,29 @@ const App = () => {
     }))
   }
 
- return (
-    <FondoGradiente>
-      <GlobalStyles />
-      <AppContainer>
-        <Cabecera
-          filtro={filtro}
-          setFiltro={setFiltro}
-        />
-        <MainContainer>
-          <BarraLateral />
-          <ContenidoGaleria>
-            <Banner
-              bannerBackground={bannerBackground}
-              texto='La galería más completa de fotos del espacio.'
-            />
-            <Galeria
-              fotos={fotosDeGaleria}
-              fotoSelecionada={foto => setFotoSeleccionada(foto)}
-              alAlternarFavorito={alAlternarFavorito}
-              setTag={setTag}
-            />
-          </ContenidoGaleria>
-        </MainContainer>
-      </AppContainer>
-      <ModalZoom
-        foto={fotoSeleccionada}
-        close={() => setFotoSeleccionada(null)}
-        alAlternarFavorito={alAlternarFavorito}
-      />
-      <Pie />
-    </FondoGradiente>
+
+  return (
+    <>
+      <FondoGradiente>
+        <GlobalStyles />
+        <AppContainer>
+          <Cabecera />
+          <MainContainer>
+            <BarraLateral />
+            <ContenidoGaleria>
+              <Banner texto="La galería más completa de fotos del espacio" backgroundImage={banner} />
+
+              <Galeria alSeleccionarFoto={foto => setFotoSeleccionada(foto)} fotos={fotosDeGaleria} alAlternarFavorito={alAlternarFavorito} />
+            </ContenidoGaleria>
+          </MainContainer>
+        </AppContainer>
+        <ModalZoom foto={fotoSeleccionada}
+          alCerrar={() => setFotoSeleccionada(null)}
+          alAlternarFavorito={alAlternarFavorito} />
+         <Pie/>
+      </FondoGradiente>
+    </>
   )
 }
+
 export default App
