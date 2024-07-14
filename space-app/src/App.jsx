@@ -16,6 +16,8 @@ function App() {
       <FondoGradiente>
         <GlobalStyles />
         <Cabecera />
+        <Banner texto={bannerTexto} backgroundImage={bannerBackgroundImage} />
+        
         <BarraLateral />
       </FondoGradiente>
     </>
